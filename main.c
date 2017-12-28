@@ -28,8 +28,9 @@ int main(int argc, char ** argv) {
   }
   fprintf(stdout, "%s\n", command);
   if (strcmp(command,"pre")==0) {
-    //pre_func(argc, argv);
-    pre(argc, argv);
+    //NOTE: this code is commented out for correct default make behavior
+    //uncomment to work on pre. but compilation will require MODULES="pre"
+    //pre(argc, argv);
   }
   return 0;
 }
