@@ -2,18 +2,18 @@
 #include <stdio.h>
 
 Map * map_create(size_t capacity, double load_factor) {
-  Map * map = calloc(1, sizeof(Map));
+  Map * map = (Map *) calloc(1, sizeof(Map));
   if (!map) {
     exit(1);
   }
-  Entry * buckets = calloc(capacity, sizeof(Entry));
+  map->size = 0;
+  map->capacity = (capacity) ? capacity : DEFAULT_CAPACITY;
+  map->load_factor = (load_factor) ? load_factor : DEFAULT_LOAD_FACTOR;
+  Entry * buckets = (Entry *) calloc(map->capacity, sizeof(Entry));
   if (!buckets) {
     exit(1);
   }
   map->buckets = buckets;
-  map->size = 0;
-  map->capacity = (capacity) ? capacity : DEFAULT_CAPACITY;
-  map->load_factor = (load_factor) ? load_factor : DEFAULT_LOAD_FACTOR;
   return map;
 }
 
@@ -34,7 +34,7 @@ void map_delete(Map * map) {
 }
 
 void map_insert(Map * map, const char * key, void * value) {
-  Entry * new_entry = calloc(1, sizeof(Entry));
+  Entry * new_entry = (Entry *) calloc(1, sizeof(Entry));
   if (!new_entry) {
     exit(1);
   }
@@ -43,8 +43,8 @@ void map_insert(Map * map, const char * key, void * value) {
     exit(1);
   }
   new_entry->value = value;
-  if ((double) (map->size + 1) / map->capacity > map->load_factor) {
-    map_resize(map, 2*map->capacity);
+  if (((double) (map->size + 1) / map->capacity) > map->load_factor) {
+    map_resize(map, 2*(map->capacity));
   }
   size_t index = hash(key, strlen(key)) % map->capacity;
   new_entry->next = map->buckets[index].next;
@@ -65,16 +65,14 @@ void * map_search(Map *map, const char *key) {
   if (node != NULL) {
     return node->value;
   } else {
-    printf("We didn't find it\n");
     return NULL;
   }
 }
 
 void map_resize(Map * map, size_t new_capacity) {
-  printf("resizing\n");
-  Entry * new_buckets = calloc(new_capacity, sizeof(Entry));
+  Entry * new_buckets = (Entry *) calloc(new_capacity, sizeof(Entry));
   if (!new_buckets) {
-    exit(0);
+    exit(1);
   }
   Entry * iter;
   Entry * next;
