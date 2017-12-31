@@ -13,9 +13,11 @@
 #include "string.h"
 
 #include "main.h"
+#include "lib/map/global_map.h"
 
 int main(int argc, char ** argv) {
   fprintf(stdout,"Starting devkit...\n");
+  Map * global_function_map = map_create(0, 0);
   char* command;
   int flag_index = 0;
   if (strcmp(argv[0],"devkit")==0) {

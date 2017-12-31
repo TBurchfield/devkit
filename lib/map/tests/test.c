@@ -2,7 +2,7 @@
 #include <string.h>
 #include <assert.h>
 
-#include "map.h"
+#include "../map.h"
 
 int main(int argc, char ** argv) {
   // Defaults

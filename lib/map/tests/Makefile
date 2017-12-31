@@ -12,13 +12,13 @@ test.o: test.c
 	@echo "Compiling test.o"
 	@$(CC) $(CFLAGS) -c -o test.o test.c
 
-map.o: map.c map.h
+map.o: ../map.c ../map.h
 	@echo "Compiling map.o"
-	@$(CC) $(CFLAGS) -c -o map.o map.c
+	@$(CC) $(CFLAGS) -c -o map.o ../map.c
 
-hash.o: hash.c
+hash.o: ../hash.c
 	@echo "Compiling hash.o"
-	@$(CC) $(CFLAGS) -c -o hash.o hash.c
+	@$(CC) $(CFLAGS) -c -o hash.o ../hash.c
 
 test:	test.o map.o hash.o
 	@echo "Linking object files into test"
