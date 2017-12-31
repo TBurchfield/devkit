@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <inttypes.h>
 
@@ -23,6 +24,7 @@ Map * map_create(size_t capacity, double load_factor);
 void map_delete(Map * map);
 
 void map_insert(Map * map, const char * key, void * value);
+bool map_remove(Map * map, const char * key);
 void * map_search(Map *map, const char *key);
 
 void map_resize(Map * map, size_t new_capacity);

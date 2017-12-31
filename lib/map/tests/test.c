@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include <assert.h>
 
 #include "../map.h"
@@ -13,7 +14,7 @@ int main(int argc, char ** argv) {
 
   char key [BUFSIZ];
   char value [BUFSIZ];
-  size_t test_to = 2000000;
+  size_t test_to = 20000;
 
   // Maps each string of a number to the string of a number one larger.
   for (size_t i = 0; i < test_to; i++) {
@@ -34,6 +35,13 @@ int main(int argc, char ** argv) {
     // Confirm map stores as intended
     assert(strcmp((char*)map_search(map_default, key), value) == 0);
     assert(strcmp((char*)map_search(map_non_default, key), value) == 0);
+  }
+  for (size_t i = 0; i < test_to/2; i++) {
+    sprintf(key, "%zu key", i);
+    assert(map_remove(map_default, key));
+    assert(!map_remove(map_default, key));
+    assert(map_remove(map_non_default, key));
+    assert(!map_remove(map_non_default, key));
   }
   map_delete(map_default);
   map_delete(map_non_default);

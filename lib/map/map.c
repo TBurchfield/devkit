@@ -1,5 +1,4 @@
 #include "map.h"
-#include <stdio.h>
 
 Map * map_create(size_t capacity, double load_factor) {
   Map * map = (Map *) calloc(1, sizeof(Map));
@@ -67,6 +66,29 @@ void * map_search(Map *map, const char *key) {
   } else {
     return NULL;
   }
+}
+
+//Returns true if item was found and removed.
+//Returns false if item was not found.
+bool map_remove(Map * map, const char *key) {
+  size_t index = hash(key, strlen(key)) % map->capacity;
+  Entry * node = &(map->buckets[index]);
+  Entry * temp;
+  while (node != NULL) {
+    if (node->next && strcmp(node->next->key, key) == 0) {
+      break;
+    }
+    node = node->next;
+  }
+  if (node == NULL) {
+    return false;
+  }
+  temp = node->next;
+  node->next = node->next->next;
+  free(temp->key);
+  free(temp);
+  map->size--;
+  return true;
 }
 
 void map_resize(Map * map, size_t new_capacity) {

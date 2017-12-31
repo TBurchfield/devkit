@@ -13,7 +13,6 @@
 #include "string.h"
 
 #include "main.h"
-#include "lib/map/global_map.h"
 
 int main(int argc, char ** argv) {
   fprintf(stdout,"Starting devkit...\n");

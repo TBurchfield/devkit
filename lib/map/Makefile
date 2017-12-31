@@ -12,3 +12,9 @@ $(TARGET): map.c map.h hash.c ../../main.h
 
 hash.o: hash.c
 	$(CC) $(CCFLAGS) -c -o $@ $<
+
+test:
+	@echo Testing.
+	@cd tests; \
+	make; \
+	./test;
